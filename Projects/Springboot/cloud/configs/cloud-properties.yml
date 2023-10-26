@@ -1,0 +1,11 @@
+application:
+  properties:
+    name: microservice cloud confid
+    version: "1.0.0"
+    developer: "Ajayi Chibueze Adeyemi"
+    license: Jilo Innovations
+    language: Java
+
+data:
+  array: data1, data2, data3
+  map: "{prop1: 'value1', prop2: 'value2', prop3: 'value3'}"
