@@ -2,7 +2,10 @@ package com.kafka.project.consumer.KafkaConsumerProject;
 
 // import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class KafkaEventListener {
     @KafkaListener(topics = "reminder-topic", groupId = "consumer-pc")
     public void listener1 (String message) {
