@@ -3,7 +3,7 @@ server:
 
 spring:
     kafka:
-        consumer:
-            boostrap-servers: 127.0.0.1:9092
+        producer:
+            bootstrap-servers: 127.0.0.1:9092
     application:
         name: kafka consumer
