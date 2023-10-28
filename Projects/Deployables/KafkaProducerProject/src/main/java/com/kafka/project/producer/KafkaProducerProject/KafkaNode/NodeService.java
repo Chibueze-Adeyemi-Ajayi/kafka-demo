@@ -15,12 +15,18 @@ public class NodeService {
     KafkaTemplate <String, Object> kafkaTemplate;
 
     public Object addReminderToKafkaProcessor (NodeRequest request) throws NodeException {
-        CompletableFuture <SendResult<String, Object>> future = this.kafkaTemplate.send("reminder-topic", request.getMessage());
-        future.whenComplete((result, ex)->{
-            if (ex != null) throw new NodeException("Error sending request to kafka", null);
-            System.out.println(result.getRecordMetadata().toString());
-        });
-        return ResponseEntity.ok().build();
+        try {
+
+            CompletableFuture <SendResult<String, Object>> future = this.kafkaTemplate.send("reminder-topic", request);
+            future.whenComplete((result, ex)->{
+                if (ex != null) throw new NodeException("Error sending request to kafka", null);
+                System.out.println(result.getRecordMetadata().toString());
+            });
+            return ResponseEntity.ok().build();
+            
+        } catch (Exception e) {
+            throw new NodeException(e.getMessage(), e.getCause(), null);
+        }
     }
 
 }
