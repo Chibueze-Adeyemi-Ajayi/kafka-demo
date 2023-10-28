@@ -8,17 +8,19 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
-import com.kafka.project.producer.KafkaProducerProject.Response;
-
-
 @Service
 public class NodeService {
 
     @Autowired
-    KafkaTemplate kafkaTemplate;
+    KafkaTemplate <String, Object> kafkaTemplate;
 
-    public ResponseEntity <Response> addReminderToKafkaProcessor (NodeRequest request) {
-       return null;
+    public Object addReminderToKafkaProcessor (NodeRequest request) throws NodeException {
+        CompletableFuture <SendResult<String, Object>> future = this.kafkaTemplate.send("reminder-topic", request.getMessage());
+        future.whenComplete((result, ex)->{
+            if (ex != null) throw new NodeException("Error sending request to kafka", null);
+            System.out.println(result.getRecordMetadata().toString());
+        });
+        return ResponseEntity.ok().build();
     }
 
 }

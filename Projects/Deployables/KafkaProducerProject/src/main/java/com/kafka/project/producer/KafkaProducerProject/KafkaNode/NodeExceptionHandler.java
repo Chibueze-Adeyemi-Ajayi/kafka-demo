@@ -10,8 +10,8 @@ import com.kafka.project.producer.KafkaProducerProject.Response;
 @ControllerAdvice
 public class NodeExceptionHandler {
     @ExceptionHandler(value = {NodeException.class})
-    public ResponseEntity <Response> handleKafkaException (String message, Throwable cause) {
-        Response response = new Response(message, cause, HttpStatus.UNAUTHORIZED);
+    public ResponseEntity <Response> handleKafkaException (Exception exception) {
+        Response response = new Response(exception.getMessage(), exception.getCause(), HttpStatus.UNAUTHORIZED);
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 }
